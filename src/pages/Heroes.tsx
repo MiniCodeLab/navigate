@@ -1,65 +1,54 @@
-import { getHeroes } from "../data/data";
-import {
-  Outlet,
-  NavLink,
-  NavLinkProps,
-  useSearchParams,
-  useLocation,
-} from "react-router-dom";
-import { HeroeType } from "../types/types";
-import React from "react";
-
-function QueryNavLink({
-  to,
-  children,
-  ...props
-}: {
-  to: string;
-  children: React.ReactNode;
-} & NavLinkProps) {
-  let location = useLocation();
-  return (
-    <NavLink to={to + location.search} {...props}>
-      {children}
-    </NavLink>
-  );
-}
+import React from 'react';
+import { Outlet, useSearchParams } from 'react-router-dom';
+import QueryNavLink from '../components/QueryNavLink';
+import { getHeroes } from '../data/heroes';
+import { HeroeType } from '../types/types';
 
 export default function Heroes() {
   const heroes = getHeroes();
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleChangeSearch = (event: any) => {
-    let filter = event.target.value;
+    const filter = event.target.value;
+
     if (filter) setSearchParams({ filter });
     else setSearchParams({});
   };
 
   return (
-    <main className="body">
-      <nav className="nav">
-        <h2>heroes</h2>
-        <label>Find: </label>
-        <input
-          value={searchParams.get("filter") || ""}
-          onChange={(event) => handleChangeSearch(event)}
-        />
-        {heroes
-          .filter((heroes: HeroeType) => {
-            const filter = searchParams.get("filter");
-            if (!filter) return true;
-            const name = heroes.name.toLowerCase();
-            return name.startsWith(filter.toLowerCase());
-          })
-          .map((heroes: any) => (
-            <QueryNavLink to={`/heroes/${heroes.id}`} key={heroes.id}>
-              {heroes.name}
-            </QueryNavLink>
-          ))}
+    <>
+      <nav className="heroes">
+        <h2>All heroes 🦸‍♂️🦸‍♀️</h2>
+
+        <div className="heroes-filter">
+          <label>Find: </label>
+          <input
+            value={searchParams.get('filter') || ''}
+            onChange={(event) => handleChangeSearch(event)}
+          />
+        </div>
+
+        <div className="heroes-links">
+          {heroes
+            .filter((heroes: HeroeType) => {
+              const filter = searchParams.get('filter');
+              if (!filter) return true;
+
+              const name = heroes.name.toLowerCase();
+              return name.startsWith(filter.toLowerCase());
+            })
+            .map((heroes: any) => (
+              <QueryNavLink to={`/heroes/${heroes.id}`} key={heroes.id}>
+                {heroes.name}
+              </QueryNavLink>
+            ))}
+        </div>
       </nav>
+
+      {/* Aquí renderizamos las subrutas incluidas en el path de este componente */}
       <div className="content">
         <Outlet />
       </div>
-    </main>
+    </>
   );
 }

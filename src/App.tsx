@@ -1,18 +1,20 @@
-import "./App.css";
-import { Outlet, Link } from "react-router-dom";
+import { Link, NavLink, Outlet } from 'react-router-dom';
+import './App.css';
 
 const App = () => {
   return (
     <div className="App">
       <header className="header">
-        <h2>React Router v6</h2>
+        <h1>React Router v6 - MiniCodeLab 🧪</h1>
       </header>
+
       <div className="body">
         <nav className="nav">
-          <Link to="">Home</Link>
-          <Link to="heroes">Heroes</Link>
-          <Link to="about">About</Link>
+          <NavLink to="">Home</NavLink>
+          <NavLink to="heroes">Heroes</NavLink>
+          <NavLink to="about">About</NavLink>
         </nav>
+
         <main className="content">
           <Outlet />
         </main>
