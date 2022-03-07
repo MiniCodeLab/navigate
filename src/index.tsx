@@ -1,13 +1,13 @@
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Pages - Components
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Heroes from "./pages/Heroes";
-import Heroe from "./pages/Heroe";
+import Home from './pages/Home';
+import About from './pages/About';
+import Heroes from './pages/Heroes';
+import Heroe from './pages/Heroe';
 
 ReactDOM.render(
   <BrowserRouter basename="/">
@@ -22,12 +22,12 @@ ReactDOM.render(
           path="*"
           element={
             <main>
-              <p>404 There's nothing here!</p>
+              <p>404 - No existe la ruta!</p>
             </main>
           }
         ></Route>
       </Route>
     </Routes>
   </BrowserRouter>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
